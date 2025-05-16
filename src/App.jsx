@@ -92,7 +92,7 @@ function App() {
                 wordBreak: 'break-word',
                 border: msg.sender === 'user' ? 'none' : '1px solid #ececec',
                 transition: 'background 0.2s',
-                textAlign: msg.sender === 'bot' ? 'left' : undefined,
+                textAlign: msg.sender === 'bot' ? 'left' : 'left',
               }}
             >
               {msg.sender === 'bot' ? (
