@@ -22,10 +22,11 @@ function App() {
     setLoading(true)
     setInput("")
     try {
-      const res = await fetch('http://localhost:8000/chat', {
+      const res = await fetch('/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: input })
+        body: JSON.stringify({ message: input }),
+        credentials: 'include', // Important for session cookies
       })
       const data = await res.json()
       setMessages((msgs) => [...msgs, { sender: 'bot', text: data.response }])
