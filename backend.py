@@ -7,6 +7,10 @@ from fastapi.responses import FileResponse
 from uuid import uuid4
 import mimetypes
 import os
+import threading
+import time
+import requests
+import random
 
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
 
@@ -93,6 +97,19 @@ def setup():
                 client.files.upload(file=f, config=UploadFileConfig(display_name=file_name, mime_type=mime_type))
         else:
             print(f"{file_name} already uploaded to Gemini.")
+
+def keepalive():
+    def probe():
+        while True:
+            try:
+                requests.get("https://whoiskai.onrender.com/", timeout=5)
+            except Exception as e:
+                print(f"Keepalive probe failed: {e}")
+            time.sleep(random.randint(20, 40))
+    t = threading.Thread(target=probe, daemon=True)
+    t.start()
+
+keepalive()
 
 setup()
 
