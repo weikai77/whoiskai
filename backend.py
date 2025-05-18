@@ -8,7 +8,7 @@ from uuid import uuid4
 import mimetypes
 import os
 
-GEMINI_API_KEY = "PLACEHOLDER"  # Replace with your actual API key
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
 
 app = FastAPI()
 client = genai.Client(api_key=GEMINI_API_KEY)
@@ -23,7 +23,9 @@ Kai is looking for a job. You are given Kai's resume, his LinkedIn profile (http
 
 Use the information provided in the files to answer questions about Kai. Where necessary, search the web to augment the information you find in the files.
 
-If the user asks a question not relevant to Kai, decline to answer politely.
+When given a question, first decide whether it's relevant to Kai or not. If it is not relevant to Kai, decline to answer politely.
+
+If the user asks for information that may change over time (such as today's date, current events, or recent news), use the web search tool to find the most up-to-date answer.
 
 In your responses, do NOT say "based on the provided documents".
 
