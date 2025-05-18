@@ -33,7 +33,7 @@ In your responses, do NOT cite text from the files literally. Instead, rephrase 
 
 If you don't know the answer to a question, just say so politely and don't make up stuff.
 
-Format your responses nicely. Use bullet points where appropriate. Format URLs links as clickable links. 
+Format your responses nicely. Use bullet points where appropriate. Format URLs links as clickable links that opens in a new tab/window. 
 """
 
 # Serve React static files
@@ -73,9 +73,9 @@ async def chat_endpoint(chat_request: ChatRequest, response: Response, session_i
 
 # Upload files to Gemini if necessary
 def setup():
-    for f in client.files.list():
-        print(f"Deleting file: {f.display_name}")
-        client.files.delete(name=f.name)
+    # for f in client.files.list():
+    #     print(f"Deleting file: {f.display_name}")
+    #     client.files.delete(name=f.name)
     kb_dir = "knowledge_base"
     if not os.path.exists(kb_dir):
         print(f"Knowledge base directory '{kb_dir}' does not exist.")
