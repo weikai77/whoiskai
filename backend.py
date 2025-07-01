@@ -76,7 +76,7 @@ async def chat_endpoint(chat_request: ChatRequest, response: Response, session_i
     return {"response": response_obj.text}
 
 # Upload files to Gemini if necessary
-def setup():
+def upload_files():
     # for f in client.files.list():
     #     print(f"Deleting file: {f.display_name}")
     #     client.files.delete(name=f.name)
@@ -109,7 +109,16 @@ def keepalive():
     t = threading.Thread(target=probe, daemon=True)
     t.start()
 
+def refresh_files():
+    def refresh():
+        while True:
+            try:
+                upload_files()
+            except Exception as e:
+                print(f"refresh_files failed: {e}")
+            time.sleep(random.randint(36*3600, 40*3600))
+    t = threading.Thread(target=refresh, daemon=True)
+    t.start()
+
 keepalive()
-
-setup()
-
+refresh_files()
